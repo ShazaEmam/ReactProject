@@ -9,8 +9,8 @@ const Movie = () => {
     const imageURL = "https://image.tmdb.org/t/p/w500/";
     const LoaderState = useSelector((state) => state.loader.isLoading)
     const [movies, setMovies] = useState([]);
-    const [page,setPage]=useState(1);
-   
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("")
     useEffect(() => {
         axiosInstance
             .get(`/movie/popular?&page=${page}`)
@@ -22,20 +22,28 @@ const Movie = () => {
                 console.log(err);
             });
     }, [page]);
-   
+
 
     return (
         <div style={{ backgroundColor: "black" }}>
-              {LoaderState && <div className="d-flex justify-content-center text-light mt-4">
-                    <div className="spinner-grow " role="status"></div>
-                </div>}
+             <div class=" justify-content-center d-flex p-5 " style={{ backgroundColor: "black" }}>
+               
+                <input type="text" className='form-control search' placeholder="Search..." 
+                onChange={(e) => setSearch(e.target.value)}
+                style={{width:"800px"}}
+                 />
+            </div>
+            {LoaderState && <div className="d-flex justify-content-center text-light mt-2" >
+                <div className="spinner-grow " role="status"></div>
+            </div>}
+           
             <div className="container  text-light" style={{ margin: "auto", backgroundColor: "black" }}>
                 <div className="row row-cols-3 " style={{ paddingTop: "3%", justifyContent: "center" }}>
 
-                    {movies.map((mov) => {
+                    {movies.filter(e => e.title.toLowerCase().includes(search)).map((mov) => {
                         return (
                             <div className="card m-2 p-4 col bg-dark border " key={mov.id} style={{ width: "350px" }}>
-                                <img src={imageURL + mov.backdrop_path} className="card-img-top "  alt={mov.title} style={{ height: "200px" }} />
+                                <img src={imageURL + mov.backdrop_path} className="card-img-top " alt={mov.title} style={{ height: "200px" }} />
                                 <div className="card-body text-center ">
                                     <h5 className="card-title ">{mov.title}</h5>
                                 </div>
@@ -47,9 +55,9 @@ const Movie = () => {
                     })}
                 </div>
             </div>
-            <div className=' justify-content-evenly d-flex p-5 mx-5' style={{backgroundColor:"black"}}>
-               <button className='btn btn-outline-warning mx-3' onClick={()=>setPage(page-1)}>Previous</button>
-               <button className='btn btn-outline-warning mx-3' onClick={()=>setPage(page+1)}>Next</button>
+            <div className=' justify-content-evenly d-flex p-5 mx-5' style={{ backgroundColor: "black" }}>
+                <button className='btn btn-outline-warning mx-3' onClick={() => setPage(page - 1)}>Previous</button>
+                <button className='btn btn-outline-warning mx-3' onClick={() => setPage(page + 1)}>Next</button>
             </div>
         </div>
     )

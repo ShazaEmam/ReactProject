@@ -24,7 +24,7 @@ const Header = () => {
                         <Link to="/" className="mx-3 text-light" style={{ textDecoration: "none" }} >Home</Link>
                         <Link to="/movies" className="mx-3 text-light" style={{ textDecoration: "none" }}>Movie</Link>
                     </Nav>
-                    <Form className="d-flex">
+                  {/*   <Form className="d-flex">
                         <Form.Control
                             type="search"
                             placeholder="Search"
@@ -32,7 +32,7 @@ const Header = () => {
                             aria-label="Search"
                         />
                         <Button variant="outline-light">Search</Button>
-                    </Form>
+                    </Form> */}
                 </Navbar.Collapse>
             </Container>
         </Navbar>
